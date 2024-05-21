@@ -38,8 +38,10 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	public ResponseEntity<Object> sellerLogin(Seller seller) {
 		Seller existSeller=sellerRepository.findByEmail(seller.getEmail());
+		
 		if(existSeller!=null) {
 			if(existSeller.getPassword().equals(seller.getPassword())){
+				
 				String token= jwTgenerator.generateToken(existSeller);
 				return ResponseEntity.ok(token);
 			}

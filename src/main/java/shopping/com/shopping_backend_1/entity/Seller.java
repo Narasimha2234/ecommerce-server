@@ -33,4 +33,12 @@ public class Seller {
 	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
 	 @JsonIgnore
 	private List<Products> products;
+
+	@Override
+	public String toString() {
+		return "Seller [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", products="
+				+ products + "]";
+	}
+	
+	
 }
