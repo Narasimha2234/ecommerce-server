@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,8 +30,9 @@ public class Products {
 	private String productname;
 	private String brandname;
 	private String category;
-	private String status;
-	@Lob
+	private String status; 
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 	private String description;
 	private int quantity;
