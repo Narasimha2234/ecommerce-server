@@ -12,7 +12,6 @@ import shopping.com.shopping_backend_1.entity.Products;
 public interface ProductsService {
 	List<Products> getProductsBySeller(long id);
 	List<Products>getAllProducts();
-	List<Products>getByCategory(String Category);
 	void deleteProduct(long sellerId,long ProductId);
 	Products updateProduct(ProductDto productDto, Long sellerId,long productId);
 	Products saveProduct(ProductDto productDto, Long userId);

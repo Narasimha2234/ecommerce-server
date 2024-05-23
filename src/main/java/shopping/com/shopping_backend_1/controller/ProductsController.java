@@ -44,10 +44,7 @@ public class ProductsController {
 	return	productsService.updateProduct(productDto, sellerid,productid);
 	}
 	
-	@GetMapping("/get/{category}")
-	public List<Products> getByCategory(@PathVariable String category){
-		return productsService.getByCategory(category);
-	}
+	
 	@DeleteMapping("/deleteProduct/{sellerId}/{productId}")
 	public void deleteProduct(@PathVariable long sellerId,@PathVariable long productId) {
 		productsService.deleteProduct(sellerId, productId);
