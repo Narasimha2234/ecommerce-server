@@ -1,6 +1,8 @@
 package shopping.com.shopping_backend_1.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ public class CartServiceImpl {
     private CustomerRepository customerRepository;
     
     @Transactional
+    
     public CartHeader addItemToCart(Long customerId, Long productId, Integer quantity) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
@@ -65,6 +68,7 @@ public class CartServiceImpl {
     }
 
     @Transactional
+ 
     public CartHeader updateItemQuantity(Long cartId, Long productId, Integer quantity) {
         CartHeader cartHeader = cartHeaderRepository.findById(cartId)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
@@ -82,6 +86,7 @@ public class CartServiceImpl {
         return cartHeaderRepository.save(cartHeader);
     }
     @Transactional
+   
     public AddToCartDto getCartByCustomerId(Long customerId) {
         CartHeader cartHeader = cartHeaderRepository.findByCustomer_Id(customerId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for customer"));
@@ -97,11 +102,12 @@ public class CartServiceImpl {
         return cartDTO;
     }
    
-
+    
     public List<CartDetailDTO> getCartDetailsByCartId(Long cartId) {
         return cartDetailRepository.findCartDetailsByCartId(cartId);
     }
     @Transactional
+    
     public void deleteCartItem(Long cartDetailId) {
         cartDetailRepository.deleteById(cartDetailId);;
     }

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Cacheable;
 import shopping.com.shopping_backend_1.dto.ProductDto;
 import shopping.com.shopping_backend_1.entity.Products;
 import shopping.com.shopping_backend_1.entity.Seller;
@@ -25,12 +27,14 @@ public class ProductsServiceImpl implements ProductsService{
 
 	@Override
 	@Transactional
+	@CacheEvict(value = {"productsByCategory", "productsBySeller", "allProducts"}, allEntries = true)
 	public void deleteProduct(long sellerId,long productId) {
 		// TODO Auto-generated method stub
 		productsRepository.deleteByIdAndSellerId(productId, sellerId);
 	}
 
 	@Override
+	 @CacheEvict(value = {"productsByCategory", "productsBySeller", "allProducts"}, allEntries = true)
 	public Products updateProduct(ProductDto productDto, Long sellerId, long productId) {
 	    Products existingProduct = productsRepository.findByIdAndSellerId(productId, sellerId);
 
@@ -76,6 +80,7 @@ public class ProductsServiceImpl implements ProductsService{
 
 
 	@Override
+	 @CacheEvict(value = {"productsByCategory", "productsBySeller", "allProducts"}, allEntries = true)
 	 public Products saveProduct(ProductDto productDto, Long userId) {
      Seller seller=  sellerRepository.findById(userId).get();
 	   Products product=new Products();
@@ -97,21 +102,19 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
 	@Override
+	 @org.springframework.cache.annotation.Cacheable(value = "productsBySeller", key = "#id")
 	public List<Products> getProductsBySeller(long id) {
 		
 		return productsRepository.findBySellerId(id);
 	}
 
 	@Override
+	@org.springframework.cache.annotation.Cacheable(value = "allProducts")
 	public List<Products> getAllProducts() {
 		return productsRepository.findAll();
 	}
 
-	@Override
-	public List<Products> getByCategory(String Category) {
-		
-		return productsRepository.findByCategory(Category);
-	}
+	
 
 
 }
