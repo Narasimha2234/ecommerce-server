@@ -41,7 +41,7 @@ public class ProductsServiceImpl implements ProductsService{
 	        throw new RuntimeException("Product not found");
 	    }
 
-	    // Update fields only if they are not null or empty
+	    
 	    if (productDto.getBrandname() != null && !productDto.getBrandname().isEmpty()) {
 	        existingProduct.setBrandname(productDto.getBrandname());
 	    }
@@ -64,7 +64,7 @@ public class ProductsServiceImpl implements ProductsService{
 	        existingProduct.setStatus(productDto.getStatus());
 	    }
 
-	    // Handle image update if a new image is provided
+	    
 	    if (productDto.getImage() != null && !productDto.getImage().isEmpty()) {
 	        try {
 	            existingProduct.setImage(productDto.getImage().getBytes());
